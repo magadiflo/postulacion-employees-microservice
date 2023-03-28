@@ -13,7 +13,7 @@ public interface IEmployeeService {
 
     Employee saveEmployee(Employee employee);
 
-    Employee updateEmployee(Employee employee);
+    Employee updateEmployee(Employee employee, Long id);
 
     void deleteEmployee(Long id);
 

@@ -37,8 +37,8 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     @Transactional
-    public Employee updateEmployee(Employee employee) {
-        return this.employeeRepository.findById(employee.getId())
+    public Employee updateEmployee(Employee employee, Long id) {
+        return this.employeeRepository.findById(id)
                 .map(employeeBD -> {
                     employeeBD.setName(employee.getName());
                     employeeBD.setLastName(employee.getLastName());
