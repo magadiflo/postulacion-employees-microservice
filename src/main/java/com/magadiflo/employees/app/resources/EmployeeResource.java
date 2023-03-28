@@ -23,7 +23,9 @@ public class EmployeeResource {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.employeeService.employeeById(id).orElseThrow());
+        return this.employeeService.employeeById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -33,13 +35,18 @@ public class EmployeeResource {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
-        return ResponseEntity.ok(this.employeeService.updateEmployee(employee, id));
+        return this.employeeService.updateEmployee(employee, id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-        this.employeeService.deleteEmployee(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+        return this.employeeService.employeeById(id)
+                .map(employee -> {
+                    this.employeeService.deleteEmployee(id);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

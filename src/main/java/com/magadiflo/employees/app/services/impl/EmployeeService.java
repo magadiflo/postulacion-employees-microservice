@@ -37,7 +37,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     @Transactional
-    public Employee updateEmployee(Employee employee, Long id) {
+    public Optional<Employee> updateEmployee(Employee employee, Long id) {
         return this.employeeRepository.findById(id)
                 .map(employeeBD -> {
                     employeeBD.setName(employee.getName());
@@ -45,9 +45,9 @@ public class EmployeeService implements IEmployeeService {
                     employeeBD.setEmail(employee.getEmail());
                     employeeBD.setMobilePhone(employee.getMobilePhone());
                     employeeBD.setSalary(employee.getSalary());
-                    return this.employeeRepository.save(employeeBD);
+                    return Optional.of(this.employeeRepository.save(employeeBD));
                 })
-                .orElseThrow(() -> new NoSuchElementException("No se encuentra el empleado a actualizar!"));
+                .orElseGet(Optional::empty);
     }
 
     @Override
