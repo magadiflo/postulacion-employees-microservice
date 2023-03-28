@@ -36,6 +36,11 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
+    public List<Employee> saveAllEmployees(List<Employee> employees) {
+        return (List<Employee>) this.employeeRepository.saveAll(employees);
+    }
+
+    @Override
     @Transactional
     public Optional<Employee> updateEmployee(Employee employee, Long id) {
         return this.employeeRepository.findById(id)

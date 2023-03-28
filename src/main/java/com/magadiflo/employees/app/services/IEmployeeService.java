@@ -13,6 +13,8 @@ public interface IEmployeeService {
 
     Employee saveEmployee(Employee employee);
 
+    List<Employee> saveAllEmployees(List<Employee> employees);
+
     Optional<Employee> updateEmployee(Employee employee, Long id);
 
     void deleteEmployee(Long id);

@@ -33,6 +33,11 @@ public class EmployeeResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.employeeService.saveEmployee(employee));
     }
 
+    @PostMapping(path = "/list")
+    public ResponseEntity<List<Employee>> saveAllEmployee(@RequestBody List<Employee> employees) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.employeeService.saveAllEmployees(employees));
+    }
+
     @PutMapping(path = "/{id}")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
         return this.employeeService.updateEmployee(employee, id)
